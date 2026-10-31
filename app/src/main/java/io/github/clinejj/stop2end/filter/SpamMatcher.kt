@@ -4,12 +4,13 @@ import java.text.Normalizer
 
 /**
  * Detects the opt-out boilerplate that political text campaigns append to their messages:
- * "stop to end", "STOP2END", "Stop 2 End", "STOP=END", "st0p to quit", "stop to opt-out", ...
+ * "stop to end", "STOP2END", "Stop 2 End", "STOP=END", "st0p to quit", "stop to opt-out",
+ * "END to end", "End2End", "END to quit", ...
  */
 object SpamMatcher {
 
     private val pattern = Regex(
-        """\bst[o0]p[\W_]*(?:(?:to|2)[\W_]*)?(?:end|quit|opt[\W_]*out|unsub(?:scribe)?)\b""",
+        """\b(?:st[o0]p|end)[\W_]*(?:(?:to|2)[\W_]*)?(?:end|quit|opt[\W_]*out|unsub(?:scribe)?)\b""",
         RegexOption.IGNORE_CASE,
     )
 

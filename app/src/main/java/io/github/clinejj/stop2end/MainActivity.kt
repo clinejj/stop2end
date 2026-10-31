@@ -169,8 +169,9 @@ private fun MainScreen(settings: AppSettings) {
             item {
                 SectionCard(title = "What gets dismissed") {
                     Text(
-                        "Messages containing \"stop to end\" and variations (stop2end, STOP=END, stop to quit, " +
-                            "stop to opt out, stop to unsubscribe). Messages from ${PhoneNumbers.SHORT_CODE_LENGTH}-digit " +
+                        "Messages containing \"stop to end\", \"end to end\" and variations (stop2end, END2END, " +
+                            "STOP=END, stop to quit, stop to opt out, stop to unsubscribe). Messages from " +
+                            "${PhoneNumbers.SHORT_CODE_LENGTHS.first}–${PhoneNumbers.SHORT_CODE_LENGTHS.last}-digit " +
                             "short codes, contacts, the allowlist and group conversations are skipped.",
                     )
                     Text(

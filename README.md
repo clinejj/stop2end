@@ -2,15 +2,15 @@
 
 An Android app that dismisses political spam text notifications from **Google Messages** and **Google Voice**.
 
-It watches incoming message notifications and dismisses any that contain "stop to end" or a variation
-(`stop2end`, `STOP 2 END`, `STOP=END`, `stop to quit`, `stop to opt out`, `stop to unsubscribe`, including
-fullwidth, bold-Unicode, lookalike-letter and zero-width-character tricks).
+It watches incoming message notifications and dismisses any that contain "stop to end", "end to end" or a
+variation (`stop2end`, `STOP 2 END`, `STOP=END`, `END2END`, `stop to quit`, `end to quit`, `stop to opt out`,
+`stop to unsubscribe`, including fullwidth, bold-Unicode, lookalike-letter and zero-width-character tricks).
 
 Messages are **not** dismissed when they come from:
 
 - a saved contact
 - a number or name on the in-app allowlist
-- a 5-digit short code (banks, pharmacies, login codes)
+- a 5- or 6-digit short code (banks, pharmacies, login codes)
 - a group conversation
 
 Only the notification is dismissed. The message itself stays in your Messages / Voice inbox, because

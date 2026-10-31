@@ -2,7 +2,8 @@ package io.github.clinejj.stop2end.filter
 
 object PhoneNumbers {
 
-    const val SHORT_CODE_LENGTH = 5
+    /** US short codes are 5 or 6 digits. */
+    val SHORT_CODE_LENGTHS = 5..6
 
     private val formatting = Regex("""[\s().\-+]""")
 
@@ -16,7 +17,7 @@ object PhoneNumbers {
         return stripped.takeIf { it.isNotEmpty() && it.all { c -> c in '0'..'9' } }
     }
 
-    fun isShortCode(value: String?): Boolean = digitsOf(value)?.length == SHORT_CODE_LENGTH
+    fun isShortCode(value: String?): Boolean = digitsOf(value)?.length in SHORT_CODE_LENGTHS
 
     /** Compares two digit strings, ignoring a country code on either side ("15551234567" == "5551234567"). */
     fun sameNumber(a: String, b: String): Boolean {

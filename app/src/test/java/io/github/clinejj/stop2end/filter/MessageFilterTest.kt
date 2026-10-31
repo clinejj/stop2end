@@ -31,14 +31,16 @@ class MessageFilterTest {
     }
 
     @Test
-    fun keepsFiveDigitShortCodes() {
+    fun keepsShortCodes() {
         assertEquals(Decision.SHORT_CODE, filter().evaluate(message(name = "12345")))
+        assertEquals(Decision.SHORT_CODE, filter().evaluate(message(name = "123456")))
         assertEquals(Decision.SHORT_CODE, filter().evaluate(message(name = "CVS", number = "28732")))
     }
 
     @Test
     fun dismissesOtherLengthNumbers() {
         assertEquals(Decision.DISMISS, filter().evaluate(message(name = "1234")))
+        assertEquals(Decision.DISMISS, filter().evaluate(message(name = "1234567")))
         assertEquals(Decision.DISMISS, filter().evaluate(message(name = "+1 (202) 555-0100")))
     }
 
@@ -80,7 +82,9 @@ class MessageFilterTest {
         assertNull(PhoneNumbers.digitsOf("Room 101"))
         assertNull(PhoneNumbers.digitsOf("  "))
         assertTrue(PhoneNumbers.isShortCode("12345"))
-        assertFalse(PhoneNumbers.isShortCode("123456"))
+        assertTrue(PhoneNumbers.isShortCode("123456"))
+        assertFalse(PhoneNumbers.isShortCode("1234"))
+        assertFalse(PhoneNumbers.isShortCode("1234567"))
         assertTrue(PhoneNumbers.sameNumber("15551234567", "5551234567"))
         assertFalse(PhoneNumbers.sameNumber("12345", "112345"))
     }

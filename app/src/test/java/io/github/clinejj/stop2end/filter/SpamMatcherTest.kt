@@ -27,6 +27,14 @@ class SpamMatcherTest {
             "Reply stop\nto end",
             "Reply \"STOP\" to end.",
             "Reply STOP_to_END",
+            "Reply END to end",
+            "END TO END",
+            "end2end",
+            "End 2 End",
+            "Txt END=END",
+            "Reply END to quit",
+            "Reply END to opt out",
+            "Reply END to unsubscribe",
         ).forEach { assertTrue("expected match: $it", SpamMatcher.matches(it)) }
     }
 
@@ -53,6 +61,9 @@ class SpamMatcherTest {
             "stop sending me memes lol",
             "Meeting will end at 3, stop by after",
             "Reply STOP to ending soon", // "end" must be a whole word
+            "See you at the end of the weekend to end the month",
+            "Ending to the endless summer",
+            "The meeting will end at noon",
         ).forEach { assertFalse("expected no match: $it", SpamMatcher.matches(it)) }
     }
 }
