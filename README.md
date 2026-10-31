@@ -31,7 +31,7 @@ The **Filtering active** switch pauses and resumes filtering instantly.
 
 ## Develop
 
-Open the project in Android Studio, or build from the command line with JDK 17+ and the Android SDK:
+Open the project in Android Studio, or build from the command line with JDK 25 and the Android SDK:
 
 ```sh
 ./gradlew testDebugUnitTest assembleDebug

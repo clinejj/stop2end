@@ -7,8 +7,7 @@ on:
 
 jobs:
   build:
-    # Pinned so the ubuntu-latest move to Ubuntu 26 can't change the build environment unannounced.
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     env:
       # A base64-encoded debug keystore, so every build is signed with the same key
       # and can be installed over the previous one.
@@ -19,7 +18,7 @@ jobs:
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 25
 
       - uses: gradle/actions/setup-gradle@v6
         with:
