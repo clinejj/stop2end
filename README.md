@@ -18,10 +18,10 @@ Android only lets the default SMS app block or delete texts.
 
 ## Install
 
-1. Open the latest successful run under the repository's **Actions** tab and download the
-   `stop2end-debug-apk` artifact. Unzip it to get `app-debug.apk`.
-2. Copy it to your phone and open it, allowing your browser or file manager to install unknown apps,
-   or run `adb install app-debug.apk`.
+1. Download `stop2end-<version>.apk` from the latest [release](../../releases/latest). For a build of
+   any other commit, open its run under the **Actions** tab and download the `stop2end-dev-….apk` artifact.
+2. Open it on your phone, allowing your browser or file manager to install unknown apps,
+   or run `adb install stop2end-<version>.apk`.
 3. Open Stop2End and tap **Grant access**, then turn on notification access for Stop2End.
    If the switch is greyed out, go back, tap **App info** › ⋮ › **Allow restricted settings**, and try again.
 4. Tap **Allow contacts access** so messages from contacts are always kept. Without it, any sender shown
@@ -35,6 +35,14 @@ Open the project in Android Studio, or build from the command line with JDK 25 a
 
 ```sh
 ./gradlew testDebugUnitTest assembleDebug
+```
+
+To publish a release, push a version tag. CI builds the APK and attaches it to a GitHub release
+with generated notes. A release drafted in the GitHub UI with a new `v…` tag works too.
+
+```sh
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
 To see what the filter decided for each notification:

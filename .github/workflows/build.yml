@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-26.04
+    permissions:
+      # Needed to create releases for version tags.
+      contents: write
     env:
       # A base64-encoded debug keystore, so every build is signed with the same key
       # and can be installed over the previous one.
@@ -31,13 +34,41 @@ jobs:
           mkdir -p ~/.android
           echo "$DEBUG_KEYSTORE_BASE64" | base64 --decode > ~/.android/debug.keystore
 
-      - name: Test and build
-        run: ./gradlew testDebugUnitTest assembleDebug
+      - name: Determine version
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            version="${GITHUB_REF_NAME#v}"
+          else
+            version="dev-${GITHUB_RUN_NUMBER}-${GITHUB_SHA::7}"
+          fi
+          echo "VERSION=$version" >> "$GITHUB_ENV"
 
+      - name: Test and build
+        run: ./gradlew testDebugUnitTest assembleDebug -PappVersionName="$VERSION" -PappVersionCode="$GITHUB_RUN_NUMBER"
+
+      - name: Name APK
+        run: |
+          mkdir dist
+          cp app/build/outputs/apk/debug/app-debug.apk "dist/stop2end-$VERSION.apk"
+
+      # Uploaded unzipped, so the download is the APK itself.
       - uses: actions/upload-artifact@v7
         with:
-          name: stop2end-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: dist/stop2end-${{ env.VERSION }}.apk
+          archive: false
+
+      - name: Publish release
+        if: github.ref_type == 'tag' && startsWith(github.ref_name, 'v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          # A release drafted in the GitHub UI creates the tag first; attach the APK to it.
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" dist/*.apk --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" dist/*.apk --title "Stop2End $VERSION" --generate-notes
+          fi
 
       - uses: actions/upload-artifact@v7
         if: failure()

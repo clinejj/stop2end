@@ -11,8 +11,10 @@ android {
         applicationId = "io.github.clinejj.stop2end"
         minSdk = 29
         targetSdk = 37
-        versionCode = 1
-        versionName = "0.1.0"
+        // CI passes these: the build number as versionCode, so each build installs as an update,
+        // and the release tag (or a dev build label) as versionName.
+        versionCode = providers.gradleProperty("appVersionCode").map(String::toInt).getOrElse(1)
+        versionName = providers.gradleProperty("appVersionName").getOrElse("dev")
     }
 
     buildTypes {
