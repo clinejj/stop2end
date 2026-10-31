@@ -9,8 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      # Optional: a base64-encoded debug keystore, so every build is signed with the same key
-      # and can be installed over the previous one. See README.
+      # A base64-encoded debug keystore, so every build is signed with the same key
+      # and can be installed over the previous one.
       DEBUG_KEYSTORE_BASE64: ${{ secrets.DEBUG_KEYSTORE_BASE64 }}
     steps:
       - uses: actions/checkout@v4

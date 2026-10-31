@@ -29,21 +29,6 @@ Android only lets the default SMS app block or delete texts.
 
 The **Filtering active** switch pauses and resumes filtering instantly.
 
-### Installing updates
-
-GitHub Actions makes a new debug signing key for every build, so Android refuses to install one build over
-another ("App not installed"). Either uninstall first (this resets the allowlist), or give CI a fixed key:
-
-```sh
-# Uses Android Studio's debug key if you have one; otherwise create one:
-keytool -genkeypair -v -keystore debug.keystore -storepass android -alias androiddebugkey \
-  -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
-base64 -w0 debug.keystore   # macOS: base64 -i debug.keystore
-```
-
-Save the output as a repository secret named `DEBUG_KEYSTORE_BASE64`
-(Settings › Secrets and variables › Actions). Uninstall once, then later builds install as updates.
-
 ## Develop
 
 Open the project in Android Studio, or build from the command line with JDK 17+ and the Android SDK:
